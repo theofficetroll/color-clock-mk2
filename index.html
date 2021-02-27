@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Colour Clock Mk II</title>
+    <style>
+      html body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        height: 100vh;
+        width: 100%;
+      }
+      .column {
+        position: relative;
+        height: 100%;
+        width: 33.333%;
+        float: left;
+        transition: all .5s ease-in-out;
+      }
+      .number {
+        color: black;
+        position: absolute;
+        top: 50%;
+        height: 100%;
+        width: 100%;
+        line-height: 100%;
+        text-align: center;
+        transition: all 0.5s ease-in-out;
+        font-family: "Sofia Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="first column">
+      <div class="hours number">
+        1
+      </div>
+    </div>
+    <div class="second column">
+      <div class="minutes number">
+        2
+      </div>
+    </div>
+    <div class="third column">
+      <div class="seconds number">
+        3
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+      function updateTime() {
+        let time = new Date();
+        let hour = time.getHours();
+        let minute = time.getMinutes();
+        let second = time.getSeconds();
+        let color, fragment;
+
+        // first column
+        fragment = Math.floor((hour * 60 + minute) * 1530 / 1439);
+        color = getColor(fragment);
+        $('div.first').css('background-color', color);
+        if (hour < 10) { hour = `0${hour}` }
+        $('div.hours').html(`${hour}`);
+
+        // second column
+        fragment = Math.floor((minute * 60 + second) * 1530 / 3599);
+        color = getColor(fragment);
+        $('div.second').css('background-color', color);
+        if (minute < 10) { minute = `0${minute}` }
+        $('div.minutes').html(`${minute}`);
+
+        // third column
+        fragment = Math.floor((second * 1530) / 60);
+        color = getColor(fragment);
+        $('div.third').css('background-color', color);
+        if (second < 10) { second = `0${second}` }
+        $('div.seconds').html(`${second}`);
+
+        setTimeout(updateTime, 1000);
+      }
+      function getColor(tick) {
+        let R, G, B;
+
+        let step = Math.floor((tick / 1530) * 6);
+        let base = tick % 255;
+
+        switch (step) {
+          case 0:
+            R = 255;
+            G = base;
+            B = 0;
+            break;
+          case 1:
+            R = 255 - base;
+            G = 255;
+            B = 0;
+            break;
+          case 2:
+            R = 0;
+            G = 255;
+            B = base;
+            break;
+          case 3:
+            R = 0;
+            G = 255 - base;
+            B = 255;
+            break;
+          case 4:
+            R = base;
+            G = 0;
+            B = 255;
+            break;
+          case 5:
+            R = 255;
+            G = 0;
+            B = 255 - base;
+            break;
+          default:
+            R = 255;
+            G = 0;
+            B = 0;
+            break;
+        }
+
+        return `rgb(${R}, ${G}, ${B})`;
+      }
+      updateTime();
+    </script>
+  </body>
+</html>

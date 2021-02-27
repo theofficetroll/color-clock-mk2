@@ -1,0 +1,19 @@
+{
+  "name": "color-clock-mk2",
+  "version": "1.0.0",
+  "description": "Another color clock",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theofficetroll/color-clock-mk2.git"
+  },
+  "author": "Mark Scrudder",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theofficetroll/color-clock-mk2/issues"
+  },
+  "homepage": "https://github.com/theofficetroll/color-clock-mk2#readme"
+}
